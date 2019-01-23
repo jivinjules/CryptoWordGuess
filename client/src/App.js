@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Clipboard from 'react-clipboard.js';
+import Confetti from './Components/Confetti'
+import ReactTooltip from 'react-tooltip'
+import './App.css';
+import Jumbtron from './Components/Jumbotron/Jumbotron'
+import Wrapper from './Components/Wrapper/Wrapper'
+
+const QRCode = require('qrcode.react');
 
 class App extends Component {
+  state = {
+    score: 0,
+    topScore: 0,
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Wrapper>
+      <Jumbtron><span id="score"> Score: {this.state.score} </span>{"  "} <span id="topscore"> Top Score: {this.state.topScore}</span>{" "} </Jumbtron>
+      </Wrapper>
     );
   }
 }
