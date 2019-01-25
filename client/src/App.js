@@ -13,7 +13,7 @@ import words from './wordList.json'
 import ErrorModal from './Components/Modal/errorModal'
 import WinModal from './Components/Modal/winModal'
 import QRModal from './Components/Modal/QRModal'
-import LoseModal from './Components/Modal/QRModal';
+import LoseModal from './Components/Modal/loseModal';
 import API from './utils/API'
 
 const QRCode = require('qrcode.react');
@@ -28,7 +28,7 @@ class App extends Component {
     numberOfBlanks: 0,
     blanksAndUnderscores: [],
     wrongGuesses: [],
-    lettersGuessed: '',
+    lettersGuessed:'',
     winCount: 0,
     lossCount: 0,
     numberofGuesses: 10,
@@ -47,6 +47,7 @@ class App extends Component {
 
   componentDidMount() {
     this.startGame()
+    document.addEventListener("keydown", this.handleClick, false);
     //   API.getStrike()
     //     .then(data => {
     //       this.setState({ charge: data.data.body.payment_request })
@@ -56,18 +57,16 @@ class App extends Component {
     //     .catch(err => console.log(err))
   }
 
-
   theWords = () => this.state.words.map(word => {
     console.log(`"${word.name}"`)
     wordArray.push(`${word.name}`)
     return wordArray
   })
 
-
   startGame = () => {
     this.theWords()
     console.log(wordArray)
-    const randomWord = wordArray[Math.floor(Math.random() * wordArray.length)]
+    const randomWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
     const splitWord = randomWord.split("")
     const blanksNeeded = splitWord.length
     this.setState({
@@ -75,58 +74,59 @@ class App extends Component {
       chosenWord: randomWord,
       lettersInChosenWord: splitWord,
       numberOfBlanks: blanksNeeded,
-      // blanksAndUnderscores: [],
+      blanksAndUnderscores: [],
       wrongGuesses: []
     })
     const blanks = []
     for (var i = 0; i < blanksNeeded; i++) {
-     blanks.push(' _ ')
-     this.setState({blanksAndUnderscores: blanks})
+      blanks.push(' _ ')
+      this.setState({ blanksAndUnderscores: blanks })
     }
- 
   }
 
   checkLetter = (letter) => {
-    let letterInWord = false;
+    var letterInWord = false;
     for (var i = 0; i < this.state.numberOfBlanks; i++) {
       if (this.state.chosenWord[i] === letter) {
         letterInWord = true
       }
     }
     if (letterInWord) {
+      const x = []
       for (var j = 0; j < this.state.numberOfBlanks; j++) {
         if (this.state.chosenWord[j] === letter) {
-          this.state.blanksAndUnderscores[j].push(letter);
+         this.state.blanksAndUnderscores[j] = letter
+          this.setState({blanksAndUnderscores: x[j]});
         }
       }
 
     } else {
       this.state.wrongGuesses.push(letter);
-      this.setState({ numberofGuesses: -1 })
+      this.setState({ numberofGuesses: this.state.numberofGuesses - 1 })
     }
   }
 
   roundComplete = () => {
     if (this.state.lettersInChosenWord.toString() === this.state.blanksAndUnderscores.toString()) {
-      this.setState({ winCount: +1, showWin: true })
-    } else if (this.state.numberOfGuesses === 0) {
-      this.setState({ lossCount: +1, show: true })
+      this.setState({ winCount: this.state.winCount +1, showWin: true })
+    } if (this.state.numberofGuesses === 0) {
+      this.setState({ lossCount: this.state.lossCount +1, show: true })
       this.startGame();
     }
   }
 
   handleHideWin = () => this.setState({ showWin: false }, () => this.exitApp())
 
-  handleHideModal = () => this.setState({ show: false, error: false }, () => this.handleEndOfGame())
+  handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
     this.setState({ lettersGuessed: String.fromCharCode(event.which).toLowerCase() });
-    this.checkLetter(this.state.letterGuessed);
+    this.checkLetter(this.state.lettersGuessed);
     this.roundComplete();
   }
 
   exitApp = () => {
-    // this.componentDidMount()
+    this.componentDidMount()
     window.location.href = 'https://localhost:3000'
   }
 
@@ -142,7 +142,7 @@ class App extends Component {
   }
 
   render() {
-console.log(this.state)
+    console.log(this.state)
     return (
       <Wrapper>
         <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id='image'>{this.state.image}</span> <span id="topscore"> Losses: {this.state.lossCount}</span>{" "} </Jumbtron>
@@ -156,7 +156,7 @@ console.log(this.state)
           <Row>
             <Column size='md-4'>
               <h1>Letters Already Guessed</h1>
-              <h1>{this.state.lettersGuessed}</h1>
+              <h1 className='word'>{this.state.wrongGuesses}</h1>
             </Column>
             <Column size='md-4'>
               <span id='image'>{this.state.image}</span>
