@@ -1,0 +1,108 @@
+[
+    {
+      "id": 1,
+      "name": "Satoshi",
+      "image": "/images/satoshi.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Ethereum",
+      "image": "/images/ethereum.png"
+    },
+    {
+      "id": 3,
+      "name": "Binance",
+      "image": "/images/binance.png"
+    },
+    {
+      "id": 4,
+      "name": "HODL",
+      "image": "/images/hodl.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Lambo",
+      "image": "/images/lambo.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Casa Node",
+      "image": "/images/CasaNode.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Bitcoin",
+      "image": "/images/Bitcoin.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Peer-to-Peer",
+      "image": "/images/peertopeer"
+    },
+    {
+      "id": 9,
+      "name": "Decentralized",
+      "image": "/images/decentralized.png"
+    },
+    {
+      "id": 10,
+      "name": "Cold Storage",
+      "image": "/images/coldstorage.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Dogecoin",
+      "image": "/images/dogecoin.png"
+    },
+    {
+      "id": 12,
+      "name": "Blockfolio",
+      "image": "/images/Blockfolio.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Lightning Network",
+      "image": "/images/Lightning.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Shitcoin Waterfall",
+      "image": "/images/waterfall.png"
+    },
+    {
+      "id": 15,
+      "name": "Hal Finney",
+      "image": "/images/halfinney.png"
+    },
+    {
+      "id": 16,
+      "name": "CryptoSprings",
+      "image": "/images/cryptosprings.jpg"
+    },
+    {
+      "id": 17,
+      "name": "blockchain",
+      "image": "/images/blockchain.jpg"
+    },
+    {
+      "id": 18,
+      "name": "Free Ross",
+      "image": "/images/freeross.png"
+    },
+    {
+      "id": 19,
+      "name": "Litecoin",
+      "image": "/images/litecoin.png"
+    },
+    {
+      "id": 20,
+      "name": "Monero",
+      "image": "/images/monero.png"
+    },
+    {
+      "id": 21,
+      "name": "Private Key",
+      "image": "/images/privatekey.png"
+    }
+  ]
+  

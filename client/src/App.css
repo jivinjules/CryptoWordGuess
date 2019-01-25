@@ -24,6 +24,10 @@ p {
   font-size: 20px;
 }
 
+.word {
+  color: white;
+}
+
 @media only screen and (max-width: 768px) {
 #topscore { 
   margin-left: 0px;

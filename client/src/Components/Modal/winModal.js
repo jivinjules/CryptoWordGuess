@@ -9,9 +9,10 @@ const WinModal = ({ show, handleHideWin, children }) => {
         <div className={showHideClassName}>
             <section className="modal-main">
                 {children[0]}
+                {children[1]}
                 LAMBO TIME!<br />
                 <p id='connect'>Connect with the creators of Crypto Word Guess {'  '}<i className="fas fa-bolt"></i>{'  '}
-                    {children[1]}
+                    {children[2]}
                 </p>
                 <button className="standard-btn" id='modal' onClick={handleHideWin}>Play again?</button>
             </section>
