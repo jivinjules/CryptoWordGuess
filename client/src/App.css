@@ -10,10 +10,28 @@ p {
   font-size: 30px;
 }
 
+#message {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(18, 152, 76), 0 0 30px rgb(18, 152, 76), 0 0 40px rgb(18, 152, 76), 0 0 55px rgb(18, 152, 76), 0 0 75px rgb(18, 152, 76);
+  margin-left: 30px;
+}
+
 #topscore {
   margin-left: 60px;
 }
 
+img {
+  height: 150px;
+  width: 150px;
+  margin-left: auto;
+	margin-right: auto;
+  display: block;
+  border: 3px solid #fff;
+  border-radius: 8px;
+  padding: 2px;
+  box-shadow: 0 0 2.5px #fff, 0 0 5px #fff, 0 0 10px rgb(144, 4, 209), 0 0 15px rgb(144, 4, 209), 0 0 20px rgb(144, 4, 209), 0 0 27.5px rgb(144, 4, 209), 0 0 37.5px rgb(144, 4, 209);
+}
 
 #amount {
   font-size: 10px;
@@ -24,12 +42,22 @@ p {
   font-size: 20px;
 }
 
-.full {
+div.col-md-12 {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 50% auto;
+  font-size: 30px;
+}
+
+div.col-md-4 {
   text-align: center;
 }
 
-.half {
-  text-align: center;
+.yourWord {
+  font-family: 'Monoton', cursive;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(19, 7, 189), 0 0 30px rgb(19, 7, 189), 0 0 40px rgb(19, 7, 189), 0 0 55px rgb(19, 7, 189), 0 0 75px #ff0080;
+  font-size: 40px;
 }
 
 .word {
