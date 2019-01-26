@@ -24,6 +24,14 @@ p {
   font-size: 20px;
 }
 
+.full {
+  text-align: center;
+}
+
+.half {
+  text-align: center;
+}
+
 .word {
   color: white;
 }

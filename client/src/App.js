@@ -17,18 +17,18 @@ import LoseModal from './Components/Modal/loseModal';
 import API from './utils/API'
 
 const QRCode = require('qrcode.react');
-const wordArray = []
+let wordArray = []
+let blanksAndUnderscores = []
+let chosenWord = ''
+let lettersInChosenWord = []
+let numberOfBlanks = 0
+let wrongGuesses = []
+let lettersGuessed = ''
 
 class App extends Component {
   state = {
     image: '',
     words,
-    chosenWord: '',
-    lettersInChosenWord: [],
-    numberOfBlanks: 0,
-    blanksAndUnderscores: [],
-    wrongGuesses: [],
-    lettersGuessed:'',
     winCount: 0,
     lossCount: 0,
     numberofGuesses: 10,
@@ -47,7 +47,6 @@ class App extends Component {
 
   componentDidMount() {
     this.startGame()
-    document.addEventListener("keydown", this.handleClick, false);
     //   API.getStrike()
     //     .then(data => {
     //       this.setState({ charge: data.data.body.payment_request })
@@ -58,60 +57,53 @@ class App extends Component {
   }
 
   theWords = () => this.state.words.map(word => {
-    console.log(`"${word.name}"`)
     wordArray.push(`${word.name}`)
     return wordArray
   })
 
   startGame = () => {
+    document.addEventListener("keydown", this.handleClick);
     this.theWords()
-    console.log(wordArray)
-    const randomWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
-    const splitWord = randomWord.split("")
-    const blanksNeeded = splitWord.length
+    blanksAndUnderscores = []
+     chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
+    lettersInChosenWord = chosenWord.split("")
+    numberOfBlanks = lettersInChosenWord.length
+    wrongGuesses = []
     this.setState({
-      numberofGuesses: 10,
-      chosenWord: randomWord,
-      lettersInChosenWord: splitWord,
-      numberOfBlanks: blanksNeeded,
-      blanksAndUnderscores: [],
-      wrongGuesses: []
+      numberofGuesses: 10
     })
-    const blanks = []
-    for (var i = 0; i < blanksNeeded; i++) {
-      blanks.push(' _ ')
-      this.setState({ blanksAndUnderscores: blanks })
+    for (var i = 0; i < numberOfBlanks; i++) {
+      blanksAndUnderscores.push(' _ ')
     }
   }
 
   checkLetter = (letter) => {
     var letterInWord = false;
-    for (var i = 0; i < this.state.numberOfBlanks; i++) {
-      if (this.state.chosenWord[i] === letter) {
-        letterInWord = true
+    for (var i = 0; i < numberOfBlanks; i++) {
+      if (chosenWord[i] === letter) {
+        letterInWord = true;
       }
     }
     if (letterInWord) {
-      const x = []
-      for (var j = 0; j < this.state.numberOfBlanks; j++) {
-        if (this.state.chosenWord[j] === letter) {
-         this.state.blanksAndUnderscores[j] = letter
-          this.setState({blanksAndUnderscores: x[j]});
+      for (var j = 0; j < numberOfBlanks; j++) {
+        if (chosenWord[j] === letter) {
+          blanksAndUnderscores[j] = letter;
+          this.setState({ numberofGuesses: this.state.numberofGuesses  })
         }
       }
 
     } else {
-      this.state.wrongGuesses.push(letter);
+      wrongGuesses.push(letter);
       this.setState({ numberofGuesses: this.state.numberofGuesses - 1 })
     }
   }
 
   roundComplete = () => {
-    if (this.state.lettersInChosenWord.toString() === this.state.blanksAndUnderscores.toString()) {
-      this.setState({ winCount: this.state.winCount +1, showWin: true })
-    } if (this.state.numberofGuesses === 0) {
-      this.setState({ lossCount: this.state.lossCount +1, show: true })
-      this.startGame();
+    if (lettersInChosenWord.toString() === blanksAndUnderscores.toString()) {
+      this.setState({ winCount: this.state.winCount + 1, showWin: true })
+    } else if (this.state.numberofGuesses === 0) {
+      this.setState({ lossCount: this.state.lossCount + 1, show: true })
+    
     }
   }
 
@@ -120,14 +112,14 @@ class App extends Component {
   handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
-    this.setState({ lettersGuessed: String.fromCharCode(event.which).toLowerCase() });
-    this.checkLetter(this.state.lettersGuessed);
+    lettersGuessed = String.fromCharCode(event.which).toLowerCase();
+    this.checkLetter(lettersGuessed);
     this.roundComplete();
   }
 
   exitApp = () => {
     this.componentDidMount()
-    window.location.href = 'https://localhost:3000'
+    window.location.href = 'localhost:3000'
   }
 
   getText() {
@@ -142,27 +134,27 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
-    return (
+     console.log({chosenWord})
+      return (
       <Wrapper>
         <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id='image'>{this.state.image}</span> <span id="topscore"> Losses: {this.state.lossCount}</span>{" "} </Jumbtron>
         <Container>
           <Row>
-            <Column size='md-12'>
+            <Column className = 'full' size='md-12'>
               <h1>Your Word</h1>
-              <h1 className='word'>{this.state.blanksAndUnderscores}</h1>
+              <h1 className='word'>{blanksAndUnderscores}</h1>
             </Column>
           </Row>
           <Row>
-            <Column size='md-4'>
+            <Column className='half' size='md-4'>
               <h1>Letters Already Guessed</h1>
-              <h1 className='word'>{this.state.wrongGuesses}</h1>
+              <h1 className='word'>{wrongGuesses}</h1>
             </Column>
             <Column size='md-4'>
               <span id='image'>{this.state.image}</span>
 
             </Column>
-            <Column size='md-4'>
+            <Column className='half' size='md-4'>
               <h1>Guesses Left</h1>
               <h1>{this.state.numberofGuesses}</h1>
 
@@ -175,7 +167,7 @@ class App extends Component {
 
             <LoseModal
               show={this.state.show}
-              handleClose={this.handleHideModal} />
+              handleClose={this.handleHideModal}>{chosenWord}</LoseModal>
 
             <QRModal
               show={this.state.showLightning}

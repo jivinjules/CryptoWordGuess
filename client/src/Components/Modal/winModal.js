@@ -8,11 +8,10 @@ const WinModal = ({ show, handleHideWin, children }) => {
     return (
         <div className={showHideClassName}>
             <section className="modal-main">
-                {children[0]}
-                {children[1]}
-                LAMBO TIME!<br />
+                            LAMBO TIME!<br />
                 <p id='connect'>Connect with the creators of Crypto Word Guess {'  '}<i className="fas fa-bolt"></i>{'  '}
-                    {children[2]}
+                {children[0]}
+                {children[1]}              
                 </p>
                 <button className="standard-btn" id='modal' onClick={handleHideWin}>Play again?</button>
             </section>
