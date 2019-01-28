@@ -53,11 +53,9 @@ class App extends Component {
     this.startGame()
       API.getStrike()
         .then(data => {
-          // console.log(data.data.body)
           this.setState({ charge: data.data.body.payment_request })
           this.setState({ amount: data.data.body.amount })
           this.setState({ charge_id: data.data.body.id })
-          // console.log(this.state.charge)
         })
         .catch(err => console.log(err))
   }
@@ -107,6 +105,7 @@ class App extends Component {
 
   startGame = () => {
     document.addEventListener("keydown", this.handleClick);
+    document.addEventListener("touchend", this.handleClick);
     this.theWords()
     blanksAndUnderscores = []
     chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
@@ -173,6 +172,7 @@ class App extends Component {
   handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
+    console.log(event)
     if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
       this.showLightning()
     }
@@ -188,6 +188,23 @@ class App extends Component {
       this.roundComplete();
     }
   }
+
+  // handleClick = (input) => {
+  //   if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
+  //     this.showLightning()
+  //   }
+  //   if (input !== /[a-z]/ ) {
+  //     this.setState({ message: "Not a valid character" })
+  //     setTimeout(function () {
+  //       this.setState({ message: '' });
+  //     }.bind(this), 1000);
+  //   }
+  //   else  {
+  //     lettersGuessed = String.fromCharCode(input.which).toLowerCase();
+  //     this.checkLetter(lettersGuessed, input);
+  //     this.roundComplete();
+  //   }
+  // }
 
   getHint = () => {
     if (this.state.numberofGuesses <= 3) {
