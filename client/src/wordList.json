@@ -17,12 +17,12 @@
     {
       "id": 4,
       "name": "HODL",
-      "image": "/images/hodl.jpg"
+      "image": "/images/hodl.png"
     },
     {
       "id": 5,
       "name": "Lambo",
-      "image": "/images/lambo.jpg"
+      "image": "/images/lambo.png"
     },
     {
       "id": 6,
@@ -37,7 +37,7 @@
     {
       "id": 8,
       "name": "cryptocurrency",
-      "image": "/images/peertopeer"
+      "image": "/images/cryptocurrency.png"
     },
     {
       "id": 9,
@@ -61,7 +61,7 @@
     },
     {
       "id": 13,
-      "name": "Lightning Network",
+      "name": "Lightning",
       "image": "/images/Lightning.jpg"
     },
     {
@@ -86,7 +86,7 @@
     },
     {
       "id": 18,
-      "name": "FreeRoss",
+      "name": "Ross",
       "image": "/images/freeross.png"
     },
     {

@@ -64,6 +64,21 @@ div.col-md-4 {
   color: white;
 }
 
+#hint {
+  font-family: 'Ubuntu', sans-serif;
+  color: white !important;
+  background-color:#d900ff !important;
+  padding: 10px !important;
+  border: none;   
+  border-radius: 2px !important;
+  font-size: 15px !important;
+}
+
+button:hover {
+  opacity: .8;
+}
+
+
 @media only screen and (max-width: 768px) {
 #topscore { 
   margin-left: 0px;

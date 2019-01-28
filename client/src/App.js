@@ -16,7 +16,7 @@ import QRModal from './Components/Modal/QRModal'
 import LoseModal from './Components/Modal/loseModal';
 import API from './utils/API'
 
-const QRCode = require('qrcode.react');
+// const QRCode = require('qrcode.react');
 let wordArray = []
 let blanksAndUnderscores = []
 let chosenWord = ''
@@ -24,11 +24,11 @@ let lettersInChosenWord = []
 let numberOfBlanks = 0
 let wrongGuesses = []
 let lettersGuessed = ''
-let pic
 
 class App extends Component {
   state = {
     words,
+    image: '',
     winCount: 0,
     lossCount: 0,
     numberofGuesses: 10,
@@ -43,18 +43,43 @@ class App extends Component {
     charge_id: '',
     paid: false,
     exit: false,
-    error: false
+    error: false,
+    hint: false,
+    button: true,
+    hasPaid: false
   }
 
   componentDidMount() {
     this.startGame()
-    //   API.getStrike()
-    //     .then(data => {
-    //       this.setState({ charge: data.data.body.payment_request })
-    //       this.setState({ amount: data.data.body.amount })
-    //       this.setState({ charge_id: data.data.body.id })
-    //     })
-    //     .catch(err => console.log(err))
+      API.getStrike()
+        .then(data => {
+          // console.log(data.data.body)
+          this.setState({ charge: data.data.body.payment_request })
+          this.setState({ amount: data.data.body.amount })
+          this.setState({ charge_id: data.data.body.id })
+          // console.log(this.state.charge)
+        })
+        .catch(err => console.log(err))
+  }
+
+  getQR = () => this.setState({ showQR: true, showYes: false })
+
+  chargePlayer = () => {
+    API.getConfirm(this.state.charge_id)
+      .then(data => {
+        if (data.data.body.paid === true) {
+          this.setState({ showQR: false, exit: false, hasPaid: true })
+          this.setState({ paid: true })
+          setTimeout(function () {
+            this.setState({ paid: false }, () => this.handleHideThis());
+          }.bind(this), 3000);
+        } else { this.setState({ exit: true, showQR: false }) }
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({ showQR: false })
+        this.setState({ exit: true })
+      })
   }
 
   theWords = () => this.state.words.map(word => {
@@ -62,32 +87,52 @@ class App extends Component {
     return wordArray
   })
 
-  getImage = () => this.state.words.map(word => {
-    pic = word.image
-    var name = word.name
-    if (chosenWord === name) {
-      console.log(`${pic}`)
-    } return pic
+  getImage = (chosenWord) => this.state.words.map(word => {
+    if (chosenWord === word.name.toLowerCase()) {
+      this.setState({ image: word.image })
+    }
   })
+
+  showLightning = () => {
+    if (this.state.charge === '') {
+      this.setState({ error: true })
+    } else { this.setState({ showLightning: true, showYes: true }) }
+  }
+
+  handleHideThis = () => this.setState({ showLightning: false })
+
+  handleHideModal = () => this.setState({ show: false, error: false }, () => this.handleEndOfGame())
+
+  handleHideWin = () => this.setState({ showWin: false }, () => this.exitApp())
 
   startGame = () => {
     document.addEventListener("keydown", this.handleClick);
     this.theWords()
-    this.getImage()
     blanksAndUnderscores = []
     chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
+    this.getImage(chosenWord)
     lettersInChosenWord = chosenWord.split("")
     numberOfBlanks = lettersInChosenWord.length
     wrongGuesses = []
     this.setState({
-      numberofGuesses: 10
+      numberofGuesses: 10,
+      button: true,
+      hint: false,
+      showYes: false,
+      showQR: false,
+      showWin: false,
+      showLightning: false,
+      paid: false,
+      exit: false,
+      show: false,
+      hasPaid: false
     })
     for (var i = 0; i < numberOfBlanks; i++) {
       blanksAndUnderscores.push(' _ ')
     }
   }
 
-  checkLetter = (letter, event) => {
+  checkLetter = (letter) => {
     var letterInWord = false;
     for (var i = 0; i < numberOfBlanks; i++) {
       if (chosenWord[i] === letter) {
@@ -101,24 +146,13 @@ class App extends Component {
           this.setState({ numberofGuesses: this.state.numberofGuesses })
         }
       }
-    } 
-    if (wrongGuesses.indexOf(letter) >= 0) {
+    }
+    else if (wrongGuesses.indexOf(letter) >= 0) {
       this.setState({ message: "Already Chosen" })
       setTimeout(function () {
         this.setState({ message: '' });
       }.bind(this), 1000);
-    } 
-    // if (event.keyCode >= 48 && event.keyCode <= 57) {
-    //   this.setState({ message: "No numbers" })
-    //   setTimeout(function () {
-    //     this.setState({ message: '' });
-    //   }.bind(this), 1000);
-    // } if (event.keyCode > 90 || event.keyCode < 48) {
-    //   this.setState({ message: "No characters" })
-    //   setTimeout(function () {
-    //     this.setState({ message: '' });
-    //   }.bind(this), 1000);
-    // }
+    }
     else {
       wrongGuesses.push(letter);
       this.setState({ numberofGuesses: this.state.numberofGuesses - 1 })
@@ -139,96 +173,109 @@ class App extends Component {
   handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
-    lettersGuessed = String.fromCharCode(event.which).toLowerCase();
-    this.checkLetter(lettersGuessed, event);
-    this.roundComplete();
+    if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
+      this.showLightning()
+    }
+    if (event.keyCode < 65 || event.keyCode > 90) {
+      this.setState({ message: "Not a valid character" })
+      setTimeout(function () {
+        this.setState({ message: '' });
+      }.bind(this), 1000);
+    }
+    else if (event.keyCode >= 65 || event.keyCode <= 90) {
+      lettersGuessed = String.fromCharCode(event.which).toLowerCase();
+      this.checkLetter(lettersGuessed, event);
+      this.roundComplete();
+    }
   }
 
-exitApp = () => {
-  this.componentDidMount()
-  window.location.href = 'localhost:3000'
-}
+  getHint = () => {
+    if (this.state.numberofGuesses <= 3) {
+      this.setState({ message: "Not enough guesses to use hint" })
+    } else {
+      this.setState({ button: false, hint: true, numberofGuesses: this.state.numberofGuesses - 3 })
+    }
+  }
 
-getText() {
-  return "03a8355790b89f4d96963019eb9413b9a2c884691837ac976bacfe25a5212892d7@99.71.113.187:9735";
-}
+  exitApp = () => {
+    this.componentDidMount()
+    window.location.href = 'localhost:3000'
+  }
 
-getQR = () => this.setState({ showQR: true, showYes: false })
+  getText() {
+    return "03a8355790b89f4d96963019eb9413b9a2c884691837ac976bacfe25a5212892d7@99.71.113.187:9735";
+  }
 
-getPaymentRequest = () => {
-  const charge = this.state.charge
-  return charge
-}
+  getQR = () => this.setState({ showQR: true, showYes: false })
 
-render() {
-  return (
-    <Wrapper>
-      <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id='image'>{this.state.image}</span> <span id="topscore"> Losses: {this.state.lossCount}</span>{" "}<span id="message">{this.state.message}</span>{" "} </Jumbtron>
-      <Container>
-        <Row>
-          <Column size='md-12'>
-            <h1 className='yourWord'>Your Word</h1>
-            <h1 className='word'>{blanksAndUnderscores}</h1>
-          </Column>
-        </Row>
-        <Row>
-          <Column size='md-4' id='column'>
-            <h1>Letters Already Guessed</h1>
-            <h1 className='word'>{wrongGuesses}</h1>
-          </Column>
-          <Column size='md-4'>
-            <span id='image'><img alt={chosenWord} src={pic} /></span>
+  getPaymentRequest = () => {
+    const charge = this.state.charge
+    return charge
+  }
 
-          </Column>
-          <Column size='md-4'>
-            <h1>Guesses Left</h1>
-            <h1>{this.state.numberofGuesses}</h1>
+  render() {
+    return (
+      <Wrapper>
+        <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id="topscore"> Losses: {this.state.lossCount}</span>{" "}<span id="message">{this.state.message}</span>{" "} </Jumbtron>
+        <Container>
+          <Row>
+            <Column size='md-12'>
+              <h1 className='yourWord'>Your Word</h1>
+              <h1 className='word'>{blanksAndUnderscores}</h1>
+            </Column>
+          </Row>
+          <Row>
+            <Column size='md-4' id='column'>
+              <h1>Letters Already Guessed</h1>
+              <h1 className='word'>{wrongGuesses}</h1>
+            </Column>
+            <Column size='md-4'>
+              {this.state.button ? <button id='hint' onClick={this.getHint}>hint</button> : null}
+              {this.state.hint ? <span id='image'><img alt={chosenWord} src={this.state.image} /></span> : null}
 
-          </Column>
+            </Column>
+            <Column size='md-4'>
+              <h1>Guesses Left</h1>
+              <h1>{this.state.numberofGuesses}</h1>
+
+            </Column>
 
 
-          <ErrorModal
-            show={this.state.error}
-            handleClose={this.handleHideModal} />
+            <ErrorModal
+              show={this.state.error}
+              handleClose={this.handleHideModal} />
 
-          <LoseModal
-            show={this.state.show}
-            handleClose={this.handleHideModal}>{chosenWord}</LoseModal>
+            <LoseModal
+              show={this.state.show}
+              handleClose={this.handleHideModal}>{chosenWord}</LoseModal>
 
-          <QRModal
-            show={this.state.showLightning}
-            showYes={this.state.showYes}
-            getQR={this.getQR}
-            showQR={this.state.showQR}
-            paid={this.state.paid}
-            exit={this.state.exit}
-            chargePlayer={this.chargePlayer}
-            exitApp={this.exitApp}>
-            <QRCode value={this.state.charge}
-              size={128}
-              bgColor={"#ffffff"}
-              fgColor={"#000000"}
-              level={"L"}
-              includeMargin={false}
-              renderAs={"svg"} />
-            <Clipboard option-text={this.getPaymentRequest} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
-              Copy Payment Request</Clipboard><br />
-            <ReactTooltip />
-          </QRModal>
-
-          <WinModal
-            show={this.state.showWin}
-            handleHideWin={this.handleHideWin}>
-            <Confetti />
-            <Clipboard option-text={this.getText} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
-              <i className="fas fa-paste"></i> Connection Code </Clipboard>
-            <ReactTooltip />
-          </WinModal>
-        </Row>
-      </Container>
-    </Wrapper >
-  );
-}
+            <QRModal
+              show={this.state.showLightning}
+              showYes={this.state.showYes}
+              getQR={this.getQR}
+              showQR={this.state.showQR}
+              paid={this.state.paid}
+              exit={this.state.exit}
+              chargePlayer={this.chargePlayer}
+              exitApp={this.exitApp}
+              amount={this.state.amount}
+              charge={this.state.charge}
+              getPaymentRequest={this.getPaymentRequest} />
+      
+            <WinModal
+              show={this.state.showWin}
+              handleHideWin={this.handleHideWin}>
+              <Confetti />
+              <Clipboard option-text={this.getText} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
+                <i className="fas fa-paste"></i> Connection Code </Clipboard><br />
+              <ReactTooltip />
+            </WinModal>
+          </Row>
+          <footer>Version 1.0< a href='https://github.com/jivinjules/CryptoWordGuess'><i className="fab fa-github"></i></a></footer>
+        </Container>
+      </Wrapper >
+    );
+  }
 }
 
 export default App;

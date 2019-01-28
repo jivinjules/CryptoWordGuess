@@ -21,10 +21,19 @@
     border-radius: 8px !important;
     max-height: 95vh;
     color: #fff;
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #00ff26, 0 0 30px #00ff26, 0 0 40px #00ff26, 0 0 55px #00ff26, 0 0 75px #00ff26;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
     font-size: 30px;    
+}
+
+#modal-qr {
+  background: white;
+  border: none !important;
+  box-shadow: none !important;
+  color: black;
+  text-shadow: none;
+  padding: 15px;
+  border-radius: 8px;
 }
   
 .display-block {
@@ -38,7 +47,7 @@
 #modal, button.standard-btn {
     font-family: 'Ubuntu', sans-serif;
     color: white !important;
-    background-color:#00ff26 !important;
+    background-color:#3af515d5 !important;
     padding: 10px !important;
     border: none;   
     border-radius: 2px !important;
@@ -51,11 +60,12 @@
     border-radius: 2px;
     height: 120px;
     padding: 15px;
+    color: black;
 }
 
 .charge {
   font-size: 20px;
-}
+ }
 
 .charge2 {
   font-size: 15px;

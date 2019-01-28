@@ -1,39 +1,52 @@
 import React from 'react'
 import './Modal.css'
+import Clipboard from 'react-clipboard.js';
+import ReactTooltip from 'react-tooltip'
 
-const LoseModal = ({ show, children, showYes, getQR, showQR, chargePlayer, paid, exit, exitApp }) => {
+const QRCode = require('qrcode.react');
 
-    const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+const QRModal = props => {
+    const showHideClassName = props.show ? 'modal display-block' : 'modal display-none';
 
     return (
         <div className={showHideClassName}>
             <section className="modal-main">
-                {showYes ?
+                {props.showYes ?
                     <span>
                         <h1>Continue playing?</h1>
-                        <button id='modal' onClick={getQR}>Yes!</button></span> : null}
-                {showQR ?
+                        <button id='modal' onClick={props.getQR}>Yes!</button></span> : null}
+                {props.showQR ?
                     <span>
-                        {children[0]}
+                        <div id='modal-qr'>
+                        <QRCode value={props.charge}
+                            size={128}
+                            bgColor={"#ffffff"}
+                            fgColor={"#000000"}
+                            level={"L"}
+                            includeMargin={false}
+                            renderAs={"svg"} />
                         <h1 className='charge'><strong>Send Lightning Payment <i className="fas fa-bolt"></i></strong></h1>
-                        <h1 className='charge'><strong>Amount: {children[1]} satoshi</strong></h1>
+                        <h1 className='charge'><strong>Amount: {props.amount} satoshi</strong></h1>
+                        </div>
                         <hr />
                         <h1 className='charge2'>No mobile device? Copy payment request below! </h1>
-                        <textarea id="bar">{children[2]}</textarea><br />
-                        {children[3]}
+                        <textarea id="bar">{props.charge}</textarea><br />
+                        <Clipboard option-text={props.getPaymentRequest} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
+                            Copy Payment Request</Clipboard><br />
+                        <ReactTooltip />
                         <hr />
-                        <h1 className='charge'><strong>After you have paid, click here to continue your game<i className="fas fa-arrow-circle-right"></i></strong><button className="standard-btn" id='modal' onClick={chargePlayer}>Continue Game</button></h1>
+                        <h1 className='charge'><strong>After you have paid, click here to continue your game<i className="fas fa-arrow-circle-right"></i></strong><button className="standard-btn" id='modal' onClick={props.chargePlayer}>Continue Game</button></h1>
                     </span>
                     : null}
-                {paid ?
+                {props.paid ?
                     <span>
                         <h1>Thanks for your payment!</h1>
                     </span>
                     : null}
-                {exit ?
+                {props.exit ?
                     <span>
-                        <h1>Bummer...no Payment received. Check payment again? <i className="fas fa-arrow-circle-right"></i><button className="standard-btn" id='modal' onClick={chargePlayer}>Check payment?</button></h1>
-                        <button className="standard-btn" id='modal' onClick={exitApp}>Exit</button>
+                        <h1>Bummer...no Payment received. Check payment again? <i className="fas fa-arrow-circle-right"></i><button className="standard-btn" id='modal' onClick={props.chargePlayer}>Check payment?</button></h1>
+                        <button className="standard-btn" id='modal' onClick={props.exitApp}>Exit</button>
                     </span>
                     : null}
             </section>
@@ -42,4 +55,4 @@ const LoseModal = ({ show, children, showYes, getQR, showQR, chargePlayer, paid,
     )
 }
 
-export default LoseModal
+export default QRModal
