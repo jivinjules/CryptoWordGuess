@@ -216,7 +216,7 @@ class App extends Component {
 
   exitApp = () => {
     this.componentDidMount()
-    window.location.href = 'localhost:3000'
+    window.location.href = 'https://bitword.herokuapp.com'
   }
 
   getText() {
