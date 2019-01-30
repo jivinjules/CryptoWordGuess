@@ -2,107 +2,128 @@
     {
       "id": 1,
       "name": "Satoshi",
-      "image": "/images/satoshi.jpg"
+      "image": "/images/satoshi.jpg",
+      "definition": "The unknown person who developed bitcoin, authored the BTC white paper, and devised the first blockchain."
     },
     {
       "id": 2,
       "name": "Ethereum",
-      "image": "/images/ethereum.png"
+      "image": "/images/ethereum.png",
+      "definition": "An open-source blockchain network developed by Vitalik Buterin that allows developers to create smart contracts."
     },
     {
       "id": 3,
       "name": "Binance",
-      "image": "/images/binance.png"
+      "image": "/images/binance.png",
+      "definition": "A cryptocurrency exchange founded by Changpeng Zhao."
     },
     {
       "id": 4,
       "name": "HODL",
-      "image": "/images/hodl.png"
+      "image": "/images/hodl.png",
+      "definition": "A misspelling of 'hold;' to avoid selling Bitcoin, regardless of value."
     },
     {
       "id": 5,
       "name": "Lambo",
-      "image": "/images/lambo.png"
+      "image": "/images/lambo.png",
+      "definition": "The goal of an enthusiastic crypto n00b."
     },
     {
       "id": 6,
       "name": "Casa",
-      "image": "/images/CasaNode.jpg"
+      "image": "/images/CasaNode.jpg",
+      "definition": "A quick, efficient way to open a payment channel from your home"
     },
     {
       "id": 7,
       "name": "Bitcoin",
-      "image": "/images/Bitcoin.jpg"
+      "image": "/images/Bitcoin.jpg",
+      "definition": "A decentralized, global digital currency that allows peer-to-peer transactions."
     },
     {
       "id": 8,
       "name": "cryptocurrency",
-      "image": "/images/cryptocurrency.png"
+      "image": "/images/cryptocurrency.png",
+      "definition": "Digital assets that use cryptography"
     },
     {
       "id": 9,
       "name": "Decentralized",
-      "image": "/images/decentralized.png"
+      "image": "/images/decentralized.png",
+      "definition": "No central authority such as a bank or government."
     },
     {
       "id": 10,
       "name": "wallet",
-      "image": "/images/coldstorage.jpg"
+      "image": "/images/coldstorage.jpg",
+      "definition": "Digital storage to hold private keys."
     },
     {
       "id": 11,
       "name": "Dogecoin",
-      "image": "/images/dogecoin.png"
+      "image": "/images/dogecoin.png",
+      "definition": "Joke cryptocurrency featuring 'Shiba' created by Jackson Palmer"
     },
     {
       "id": 12,
       "name": "Blockfolio",
-      "image": "/images/Blockfolio.jpg"
+      "image": "/images/Blockfolio.jpg",
+      "definition": "Popular mobile app for cryptocurrency portfolio tracking"
     },
     {
       "id": 13,
       "name": "Lightning",
-      "image": "/images/Lightning.jpg"
+      "image": "/images/Lightning.jpg",
+      "definition": "Allows quick transactions of crypto between nodes"
     },
     {
       "id": 14,
       "name": "Shitcoins",
-      "image": "/images/waterfall.png"
+      "image": "/images/waterfall.png",
+      "definition": "Any worthless altcoin"
     },
     {
       "id": 15,
       "name": "Finney",
-      "image": "/images/halfinney.png"
+      "image": "/images/halfinney.png",
+      "definition": "Received the first bitcoin transaction."
     },
     {
       "id": 16,
       "name": "CryptoSprings",
-      "image": "/images/cryptosprings.jpg"
+      "image": "/images/cryptosprings.jpg",
+      "definition": "A conference featuring well-known voices of crypto."
     },
     {
       "id": 17,
       "name": "blockchain",
-      "image": "/images/blockchain.jpg"
+      "image": "/images/blockchain.jpg",
+      "definition": "An immutable, digital record of transactions"
     },
     {
       "id": 18,
       "name": "Ross",
-      "image": "/images/freeross.png"
+      "image": "/images/freeross.png",
+      "definition": "Creator of the Silk Road Marketplace and currently serving an unfair double life sentence."
     },
     {
       "id": 19,
       "name": "Litecoin",
-      "image": "/images/litecoin.png"
+      "image": "/images/litecoin.png",
+      "definition": "An early bitcoin spinoff that enables instant payments"
     },
     {
       "id": 20,
       "name": "Monero",
-      "image": "/images/monero.png"
+      "image": "/images/monero.png",
+      "definition": "A privacy coin"
     },
     {
       "id": 21,
       "name": "key",
-      "image": "/images/privatekey.png"
+      "image": "/images/privatekey.png",
+      "definition": "Secret key that allows bitcoins to be accessed and must be kept secure."
     }
   ]
   

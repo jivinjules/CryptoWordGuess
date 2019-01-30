@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Clipboard from 'react-clipboard.js';
-import Confetti from './Components/Confetti'
-import ReactTooltip from 'react-tooltip'
-import './App.css';
 import Jumbtron from './Components/Jumbotron/Jumbotron'
 import Column from './Components/column'
 import Row from './Components/row'
@@ -31,6 +27,7 @@ class App extends Component {
     image: '',
     winCount: 0,
     lossCount: 0,
+    definition: "",
     numberofGuesses: 10,
     message: '',
     show: false,
@@ -51,13 +48,7 @@ class App extends Component {
 
   componentDidMount() {
     this.startGame()
-      API.getStrike()
-        .then(data => {
-          this.setState({ charge: data.data.body.payment_request })
-          this.setState({ amount: data.data.body.amount })
-          this.setState({ charge_id: data.data.body.id })
-        })
-        .catch(err => console.log(err))
+
   }
 
   getQR = () => this.setState({ showQR: true, showYes: false })
@@ -85,9 +76,9 @@ class App extends Component {
     return wordArray
   })
 
-  getImage = (chosenWord) => this.state.words.map(word => {
+  getImageAndDef = (chosenWord) => this.state.words.map(word => {
     if (chosenWord === word.name.toLowerCase()) {
-      this.setState({ image: word.image })
+      this.setState({ image: word.image, definition: word.definition })
     }
   })
 
@@ -106,10 +97,17 @@ class App extends Component {
   startGame = () => {
     document.addEventListener("keydown", this.handleClick);
     document.addEventListener("touchend", this.handleClick);
+    API.getStrike()
+    .then(data => {
+      this.setState({ charge: data.data.body.payment_request })
+      this.setState({ amount: data.data.body.amount })
+      this.setState({ charge_id: data.data.body.id })
+    })
+    .catch(err => console.log(err))
     this.theWords()
     blanksAndUnderscores = []
     chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
-    this.getImage(chosenWord)
+    this.getImageAndDef(chosenWord)
     lettersInChosenWord = chosenWord.split("")
     numberOfBlanks = lettersInChosenWord.length
     wrongGuesses = []
@@ -172,7 +170,6 @@ class App extends Component {
   handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
-    console.log(event)
     if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
       this.showLightning()
     }
@@ -215,9 +212,8 @@ class App extends Component {
   }
 
   exitApp = () => {
-    this.componentDidMount()
-    window.location.href = 'https://bitword.herokuapp.com'
-  }
+    this.startGame()
+ }
 
   getText() {
     return "03a8355790b89f4d96963019eb9413b9a2c884691837ac976bacfe25a5212892d7@99.71.113.187:9735";
@@ -264,7 +260,9 @@ class App extends Component {
 
             <LoseModal
               show={this.state.show}
-              handleClose={this.handleHideModal}>{chosenWord}</LoseModal>
+              word={chosenWord}
+              definition={this.state.definition}
+              handleClose={this.handleHideModal} />
 
             <QRModal
               show={this.state.showLightning}
@@ -281,12 +279,11 @@ class App extends Component {
       
             <WinModal
               show={this.state.showWin}
-              handleHideWin={this.handleHideWin}>
-              <Confetti />
-              <Clipboard option-text={this.getText} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
-                <i className="fas fa-paste"></i> Connection Code </Clipboard><br />
-              <ReactTooltip />
-            </WinModal>
+              handleHideWin={this.handleHideWin}
+              getText={this.getText}
+              word={chosenWord}
+              definition={this.state.definition} />
+
           </Row>
           <footer>Version 1.0< a href='https://github.com/jivinjules/CryptoWordGuess'><i className="fab fa-github"></i></a></footer>
         </Container>
