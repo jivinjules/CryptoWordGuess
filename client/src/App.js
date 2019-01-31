@@ -12,7 +12,6 @@ import QRModal from './Components/Modal/QRModal'
 import LoseModal from './Components/Modal/loseModal';
 import API from './utils/API'
 
-// const QRCode = require('qrcode.react');
 let wordArray = []
 let blanksAndUnderscores = []
 let chosenWord = ''
@@ -20,6 +19,7 @@ let lettersInChosenWord = []
 let numberOfBlanks = 0
 let wrongGuesses = []
 let lettersGuessed = ''
+var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 class App extends Component {
   state = {
@@ -48,8 +48,7 @@ class App extends Component {
 
   componentDidMount() {
     this.startGame()
-
-  }
+ }
 
   getQR = () => this.setState({ showQR: true, showYes: false })
 
@@ -95,8 +94,6 @@ class App extends Component {
   handleHideWin = () => this.setState({ showWin: false }, () => this.exitApp())
 
   startGame = () => {
-    document.addEventListener("keydown", this.handleClick, false);
-    document.addEventListener("touchend", this.handleClickMobile, false);
     API.getStrike()
       .then(data => {
         this.setState({ charge: data.data.body.payment_request })
@@ -170,25 +167,14 @@ class App extends Component {
   handleHideModal = () => this.setState({ show: false, error: false }, () => this.componentDidMount())
 
   handleClick = (event) => {
-    if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
+   lettersGuessed = event.target.value
+   if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
       this.showLightning()
     }
-    if (event.keyCode < 65 || event.keyCode > 90) {
-      this.setState({ message: "Not a valid character" })
-      setTimeout(function () {
-        this.setState({ message: '' });
-      }.bind(this), 1000);
-    }
-    else if (event.keyCode >= 65 || event.keyCode <= 90) {
-      lettersGuessed = String.fromCharCode(event.which).toLowerCase();
-      this.checkLetter(lettersGuessed, event);
+    else {
+      this.checkLetter(lettersGuessed);
       this.roundComplete();
     }
-  }
-
-  showKeyboard =() => {
-    document.getElementById("keyboard").focus()
-    this.handleClick()
   }
 
   getHint = () => {
@@ -215,7 +201,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(chosenWord)
     return (
       <Wrapper>
         <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id="topscore"> Losses: {this.state.lossCount}</span>{" "}<span id="message">{this.state.message}</span>{" "} </Jumbtron>
@@ -223,8 +208,9 @@ class App extends Component {
           <Row>
             <Column size='md-12'>
               <h1 className='yourWord'>Your Word</h1>
-              <h1 className='word' id='keyboard' onClick={this.showKeyboard}>{blanksAndUnderscores}</h1>
-              {/* <input className='input' type='text' value={blanksAndUnderscores} /> */}
+              <h1 className='word'>{blanksAndUnderscores}</h1>
+              <div id="buttons" ><ul id = 'alphabet' >{alphabet.map((letter, i) => (
+              <button id='letters' value = {letter} onClick={this.handleClick}>{letter}</button> ))}</ul></div>
             </Column>
           </Row>
           <Row>
