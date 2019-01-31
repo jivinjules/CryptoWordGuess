@@ -95,15 +95,15 @@ class App extends Component {
   handleHideWin = () => this.setState({ showWin: false }, () => this.exitApp())
 
   startGame = () => {
-    document.addEventListener("keydown", this.handleClick);
-    document.addEventListener("touchend", this.handleClick);
+    document.addEventListener("keydown", this.handleClick, false);
+    document.addEventListener("touchend", this.handleClickMobile, false);
     API.getStrike()
-    .then(data => {
-      this.setState({ charge: data.data.body.payment_request })
-      this.setState({ amount: data.data.body.amount })
-      this.setState({ charge_id: data.data.body.id })
-    })
-    .catch(err => console.log(err))
+      .then(data => {
+        this.setState({ charge: data.data.body.payment_request })
+        this.setState({ amount: data.data.body.amount })
+        this.setState({ charge_id: data.data.body.id })
+      })
+      .catch(err => console.log(err))
     this.theWords()
     blanksAndUnderscores = []
     chosenWord = wordArray[Math.floor(Math.random() * wordArray.length)].toLowerCase()
@@ -186,22 +186,22 @@ class App extends Component {
     }
   }
 
-  // handleClick = (input) => {
-  //   if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
-  //     this.showLightning()
-  //   }
-  //   if (input !== /[a-z]/ ) {
-  //     this.setState({ message: "Not a valid character" })
-  //     setTimeout(function () {
-  //       this.setState({ message: '' });
-  //     }.bind(this), 1000);
-  //   }
-  //   else  {
-  //     lettersGuessed = String.fromCharCode(input.which).toLowerCase();
-  //     this.checkLetter(lettersGuessed, input);
-  //     this.roundComplete();
-  //   }
-  // }
+  handleClickMobile = (event) => {
+    if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
+      this.showLightning()
+    }
+    if (event.keyCode < 65 || event.keyCode > 90) {
+      this.setState({ message: "Not a valid character" })
+      setTimeout(function () {
+        this.setState({ message: '' });
+      }.bind(this), 1000);
+    }
+    else if (event.keyCode >= 65 || event.keyCode <= 90) {
+      lettersGuessed = String.fromCharCode(event.which).toLowerCase();
+      this.checkLetter(lettersGuessed, event);
+      this.roundComplete();
+    }
+  }
 
   getHint = () => {
     if (this.state.numberofGuesses <= 3) {
@@ -213,9 +213,9 @@ class App extends Component {
 
   exitApp = () => {
     this.startGame()
- }
+  }
 
-  getText() {
+  getText = () => {
     return "03a8355790b89f4d96963019eb9413b9a2c884691837ac976bacfe25a5212892d7@99.71.113.187:9735";
   }
 
@@ -234,7 +234,8 @@ class App extends Component {
           <Row>
             <Column size='md-12'>
               <h1 className='yourWord'>Your Word</h1>
-              <h1 className='word'>{blanksAndUnderscores}</h1>
+              {/* <h1 className='word'>{blanksAndUnderscores}</h1> */}
+              <input className = 'input' type='text' value={blanksAndUnderscores} />
             </Column>
           </Row>
           <Row>
@@ -276,7 +277,7 @@ class App extends Component {
               amount={this.state.amount}
               charge={this.state.charge}
               getPaymentRequest={this.getPaymentRequest} />
-      
+
             <WinModal
               show={this.state.showWin}
               handleHideWin={this.handleHideWin}

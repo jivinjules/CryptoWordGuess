@@ -56,8 +56,9 @@ div.col-md-4 {
 
 .yourWord {
   font-family: 'Monoton', cursive;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(19, 7, 189), 0 0 30px rgb(19, 7, 189), 0 0 40px rgb(19, 7, 189), 0 0 55px rgb(19, 7, 189), 0 0 75px #ff0080;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px rgb(19, 7, 189), 0 0 30px rgb(19, 7, 189), 0 0 40px rgb(19, 7, 189), 0 0 55px rgb(19, 7, 189), 0 0 75px rgb(19, 7, 189);
   font-size: 40px;
+  margin-bottom: 50px;
 }
 
 .word {
@@ -72,6 +73,11 @@ div.col-md-4 {
   border: none;   
   border-radius: 2px !important;
   font-size: 15px !important;
+}
+
+.input {
+  background-color: black;
+  border: none !important;
 }
 
 button:hover {
