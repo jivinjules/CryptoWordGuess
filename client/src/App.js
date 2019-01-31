@@ -186,23 +186,11 @@ class App extends Component {
     }
   }
 
-  handleClickMobile = (event) => {
-    if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
-      this.showLightning()
-    }
-    if (event.keyCode < 65 || event.keyCode > 90) {
-      this.setState({ message: "Not a valid character" })
-      setTimeout(function () {
-        this.setState({ message: '' });
-      }.bind(this), 1000);
-    }
-    else if (event.keyCode >= 65 || event.keyCode <= 90) {
-      lettersGuessed = String.fromCharCode(event.which).toLowerCase();
-      this.checkLetter(lettersGuessed, event);
-      this.roundComplete();
-    }
+  handleClickMobile =() => {
+    prompt()
+    this.handleClick()
   }
-
+  
   getHint = () => {
     if (this.state.numberofGuesses <= 3) {
       this.setState({ message: "Not enough guesses to use hint" })
@@ -227,6 +215,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(chosenWord)
     return (
       <Wrapper>
         <Jumbtron><span id="score"> Wins: {this.state.winCount} </span>{"  "}<span id="topscore"> Losses: {this.state.lossCount}</span>{" "}<span id="message">{this.state.message}</span>{" "} </Jumbtron>
@@ -234,8 +223,8 @@ class App extends Component {
           <Row>
             <Column size='md-12'>
               <h1 className='yourWord'>Your Word</h1>
-              {/* <h1 className='word'>{blanksAndUnderscores}</h1> */}
-              <input className = 'input' type='text' value={blanksAndUnderscores} />
+              <h1 className='word'>{blanksAndUnderscores}</h1>
+              {/* <input className='input' type='text' value={blanksAndUnderscores} /> */}
             </Column>
           </Row>
           <Row>

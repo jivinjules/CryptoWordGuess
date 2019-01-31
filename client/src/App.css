@@ -78,6 +78,7 @@ div.col-md-4 {
 .input {
   background-color: black;
   border: none !important;
+  text-align: center;
 }
 
 button:hover {
