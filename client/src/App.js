@@ -186,11 +186,11 @@ class App extends Component {
     }
   }
 
-  handleClickMobile =() => {
-    prompt()
+  showKeyboard =() => {
+    document.getElementById("keyboard").focus()
     this.handleClick()
   }
-  
+
   getHint = () => {
     if (this.state.numberofGuesses <= 3) {
       this.setState({ message: "Not enough guesses to use hint" })
@@ -223,7 +223,7 @@ class App extends Component {
           <Row>
             <Column size='md-12'>
               <h1 className='yourWord'>Your Word</h1>
-              <h1 className='word'>{blanksAndUnderscores}</h1>
+              <h1 className='word' id='keyboard' onClick={this.showKeyboard}>{blanksAndUnderscores}</h1>
               {/* <input className='input' type='text' value={blanksAndUnderscores} /> */}
             </Column>
           </Row>
