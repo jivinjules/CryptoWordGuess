@@ -88,8 +88,8 @@ i.fas.fa-arrow-circle-right {
   #bar {
     font-size: 10px;
     width: 275px;
-    height: 115px;
-    padding: 10px;
+    height: 110px;
+    padding: 8px;
     }
 
     #modal-qr {
@@ -97,6 +97,10 @@ i.fas.fa-arrow-circle-right {
     }
 
     .modal-main {
-      font-size: 20px;    
+      font-size: 15px;    
   }
+
+  .charge {
+    font-size: 15px;
+   }
   }
