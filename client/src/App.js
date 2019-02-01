@@ -156,7 +156,7 @@ class App extends Component {
   roundComplete = () => {
     if (lettersInChosenWord.toString() === blanksAndUnderscores.toString()) {
       this.setState({ winCount: this.state.winCount + 1, showWin: true })
-    } else if (this.state.numberofGuesses === 0) {
+    } else if (this.state.numberofGuesses === 1 ) {
       this.setState({ lossCount: this.state.lossCount + 1, show: true })
 
     }
