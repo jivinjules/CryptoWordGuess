@@ -87,8 +87,8 @@ i.fas.fa-arrow-circle-right {
 @media only screen and (max-width: 768px) {
   #bar {
     font-size: 10px;
-    width: 275px;
-    height: 110px;
+    width: 270px;
+    height: 103px;
     padding: 8px;
     }
 
@@ -101,6 +101,6 @@ i.fas.fa-arrow-circle-right {
   }
 
   .charge {
-    font-size: 15px;
+    font-size: 12px;
    }
   }
