@@ -23,7 +23,7 @@
     color: #fff;
     text-align: center;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 22px;    
+    font-size: 30px;    
 }
 
 #modal-qr {
@@ -32,7 +32,7 @@
   box-shadow: none !important;
   color: black;
   text-shadow: none;
-  padding: 10px;
+  padding: 15px;
   border-radius: 8px;
 }
   
@@ -58,7 +58,7 @@
     font-size: 12px;
     width: 330px;
     border-radius: 2px;
-    height: 115px;
+    height: 120px;
     padding: 15px;
     color: black;
 }
@@ -88,7 +88,15 @@ i.fas.fa-arrow-circle-right {
   #bar {
     font-size: 10px;
     width: 275px;
-    height: 120px;
+    height: 115px;
     padding: 10px;
     }
+
+    #modal-qr {
+      padding: 8px;
+    }
+
+    .modal-main {
+      font-size: 20px;    
+  }
   }
