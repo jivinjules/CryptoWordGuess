@@ -123,7 +123,7 @@
       "id": 21,
       "name": "key",
       "image": "/images/privatekey.png",
-      "definition": "Secret key that allows bitcoins to be accessed and must be kept secure."
+      "definition": "Allows bitcoins to be accessed and must be kept secure."
     }
   ]
   
