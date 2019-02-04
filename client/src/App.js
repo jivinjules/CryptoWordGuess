@@ -200,6 +200,8 @@ class App extends Component {
     return charge
   }
 
+  hideForTips = () => this.setState({ showWin: false }, () => this.exitApp())
+
   render() {
     return (
       <Wrapper>
@@ -258,7 +260,8 @@ class App extends Component {
               handleHideWin={this.handleHideWin}
               getText={this.getText}
               word={chosenWord}
-              definition={this.state.definition} />
+              definition={this.state.definition}
+              hideForTips={this.hideForTips} />
 
           </Row>
           <footer>Version 1.0< a href='https://github.com/jivinjules/CryptoWordGuess'><i className="fab fa-github"></i></a></footer>

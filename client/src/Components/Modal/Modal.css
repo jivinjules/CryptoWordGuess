@@ -44,7 +44,7 @@
     display: none;
 }
 
-#modal, button.standard-btn {
+#modal, button.standard-btn, #tippin-button {
     font-family: 'Ubuntu', sans-serif;
     color: white !important;
     background-color:#3af515d5 !important;
@@ -52,6 +52,12 @@
     border: none;   
     border-radius: 2px !important;
     font-size: 15px !important;
+}
+
+#tippin-button {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /* float: right; */
 }
 
 #bar {

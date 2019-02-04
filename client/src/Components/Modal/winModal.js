@@ -20,7 +20,10 @@ const WinModal = props => {
                     <Clipboard option-text={props.getText} data-tip="Copied" data-event='click' className="standard-btn" id='modal' >
                         <i className="fas fa-paste"></i> Connection Code </Clipboard><br />
                     <ReactTooltip />
-                </span>
+                    Want to see more games on the lightning network? Consider a tip! 
+          
+                    <div id='tippin-button' data-dest='TheRandomOne18' onClick={props.hideForTips}></div></span>
+                    <hr />
                 <button className="standard-btn" id='modal' onClick={props.handleHideWin}>Play again?</button>
             </section>
         </div >
