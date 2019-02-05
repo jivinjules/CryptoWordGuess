@@ -141,6 +141,9 @@ class App extends Component {
         }
       }
     }
+    // if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
+    //   this.showLightning()
+    // }
     else if (wrongGuesses.indexOf(letter) >= 0) {
       this.setState({ message: "Already Chosen" })
       setTimeout(function () {
@@ -170,6 +173,7 @@ class App extends Component {
    lettersGuessed = event.target.value
    if (this.state.numberofGuesses <= 8 && this.state.hasPaid === false) {
       this.showLightning()
+      this.checkLetter(lettersGuessed)
     }
     else {
       this.checkLetter(lettersGuessed);

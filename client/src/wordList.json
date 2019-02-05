@@ -124,6 +124,12 @@
       "name": "key",
       "image": "/images/privatekey.png",
       "definition": "Allows bitcoins to be accessed and must be kept secure."
+    },
+    {
+      "id": 22,
+      "name": "XRP",
+      "image": "/images/ripple.png",
+      "definition": "An asset that calls itself a cryptocurrency ;-)"
     }
   ]
   
